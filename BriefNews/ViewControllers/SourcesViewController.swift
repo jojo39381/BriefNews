@@ -18,7 +18,7 @@ class SourcesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var collectionView: UICollectionView!
     let url = "https://newsapi.org/v2/sources?apiKey=37549870075446d3aefbbe3117adbad7"
     var imageUrl = "https://logo.clearbit.com"
-    var params = ["country":"us"]
+    var params = ["language":"en"]
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -81,7 +81,7 @@ let loadview = UIView()
                     source.sourceDescription = sources["description"].stringValue
                     source.imgUrl = modifyString(oldString:sources["url"].stringValue)
                     source.sourceID = sources["id"].stringValue
-                    source.sourceDomain = sources["url"].stringValue
+                    source.sourceDomain = String(describing: modifyString(oldString:sources["url"].stringValue)).replacingOccurrences(of: "https://logo.clearbit.com/", with: "" )
                     
                 }
 
@@ -160,7 +160,7 @@ let newString = oldString.replacingOccurrences(of: "go.", with: "")
             cell.selectedButton.image = nil
         }
         else {
-            if sourcesArray[0].sourcesID?.range(of: sources[indexPath.row].sourceID) != nil{
+            if (sourcesArray[0].sourcesID?.contains(word:sources[indexPath.row].sourceID))! {
                 cell.selectedButton.image = #imageLiteral(resourceName: "checked-2.png")
             }
             else {
@@ -189,6 +189,7 @@ loadItems()
         if sourcesArray.count == 0 {
         let newItem = Sources(context:context)
         newItem.sourcesID = sources[indexPath.row].sourceID
+            newItem.sourcesDomain = sources[indexPath.row].sourceDomain
             saveItems()
         }
         else {
@@ -196,37 +197,44 @@ loadItems()
 
                  let newSource = sourcesArray[0].sourcesID?.replacingOccurrences(of: ",\(sources[indexPath.row].sourceID)", with: "")
                     sourcesArray[0].setValue(newSource, forKey: "sourcesID")
-
+                sourcesArray[0].setValue(newSource, forKey: "sourcesDomain")
                 saveItems()
 
             }
             else if sourcesArray[0].sourcesID?.range(of:"\(sources[indexPath.row].sourceID),") != nil{
                 var newSource = sourcesArray[0].sourcesID?.replacingOccurrences(of: "\(sources[indexPath.row].sourceID),", with: "")
                 sourcesArray[0].setValue(newSource, forKey: "sourcesID")
+                sourcesArray[0].setValue(newSource, forKey: "sourcesDomain")
                 saveItems()
 
             }
             else if sourcesArray[0].sourcesID == sources[indexPath.row].sourceID{
                 var newSource = sourcesArray[0].sourcesID?.replacingOccurrences(of: sources[indexPath.row].sourceID, with: "")
                 sourcesArray[0].setValue(newSource, forKey: "sourcesID")
+                sourcesArray[0].setValue(newSource, forKey: "sourcesDomain")
                 saveItems()
             }
             else {
 
                 var newSource = sourcesArray[0].sourcesID! + ",\(sources[indexPath.row].sourceID)"
+                var newDomain = sourcesArray[0].sourcesDomain! + ",\(sources[indexPath.row].sourceDomain)"
                 if newSource.first == "," {
+                    newDomain.removeFirst()
                     newSource.removeFirst()
                 }
                 if newSource.last == "," {
-                    newSource.removeFirst()
+                    newDomain.removeLast()
+                    newSource.removeLast()
                 }
 
                 sourcesArray[0].setValue(newSource, forKey: "sourcesID")
+                sourcesArray[0].setValue(newDomain, forKey: "sourcesDomain")
                 saveItems()
             }
         }
         loadItems()
         print(sourcesArray[0].sourcesID)
+        print(sourcesArray[0].sourcesDomain)
         collectionView.reloadItems(at: [indexPath])
     }
 
@@ -331,6 +339,12 @@ self.menuTable.frame.origin.y = window.frame.height
 
     }
 
+}
+extension String {
+    func contains(word : String) -> Bool
+    {
+        return self.range(of: "\\b\(word)\\b", options: .regularExpression) != nil
+    }
 }
 
 extension String {

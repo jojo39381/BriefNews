@@ -15,15 +15,25 @@ import Kingfisher
 import CoreData
 import FBAudienceNetwork
 
-let adRowStep = 5
 
-var adsManager: FBNativeAdsManager!
-
-var adsCellProvider: FBNativeAdTableViewCellProvider!
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBNativeAdDelegate,FBNativeAdsManagerDelegate{
+    let adRowStep = 5
+
+
+
+    var adsManager: FBNativeAdsManager!
+
+    var adsCellProvider: FBNativeAdTableViewCellProvider!
+    func configureAdManagerAndLoadAds() {
+        if adsManager == nil {
+            adsManager = FBNativeAdsManager(placementID: "189849765075086_189849888408407", forNumAdsRequested: 5)
+            adsManager.delegate = self
+            adsManager.loadAds()
+        }
+    }
     func nativeAdsLoaded() {
-       
+
         adsCellProvider = FBNativeAdTableViewCellProvider(manager: adsManager, for: FBNativeAdViewType.genericHeight300)
         adsCellProvider.delegate = self
         
@@ -34,8 +44,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLayoutSubviews() {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell") as! ArticleCell
         cell.title.sizeToFit()
-        let adscell = self.tableView.dequeueReusableCell(withIdentifier: "adsCell") as! AdsCell
-        adscell.adTitle.sizeToFit()
+
     }
 
     func nativeAdsFailedToLoadWithError(_ error: Error) {
@@ -93,17 +102,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        
 
         fetchArticles(url: articlesUrl, parameters: params)
-
+configureAdManagerAndLoadAds()
         // Do any additional setup after loading the view, typically from a nib.
     }
   
-    func configureAdManagerAndLoadAds() {
-        if adsManager == nil {
-            adsManager = FBNativeAdsManager(placementID: "189849765075086_189849888408407", forNumAdsRequested: 5)
-            adsManager.delegate = self as? FBNativeAdsManagerDelegate
-            adsManager.loadAds()
-        }
-    }
+
     override func viewDidAppear(_ animated: Bool) {
         print(params)
 
@@ -135,12 +138,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
             changed = false
         }
-        configureAdManagerAndLoadAds()
+
 
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+  if adsCellProvider != nil && adsCellProvider.isAdCell(at: indexPath, forStride: UInt(adRowStep)) {
 
+        }
+  else {
         let summaryVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "summary") as! SummaryViewController
         self.navigationController!.pushViewController(summaryVC, animated: true)
 
@@ -155,7 +161,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             summaryVC.titleText = self.articles[indexPath.row - Int(indexPath.row / adRowStep)].title
             summaryVC.url = self.articles[indexPath.row - Int(indexPath.row / adRowStep)].url
-
+        }
 
 
 
@@ -174,22 +180,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+
+
+    func nativeAdDidClick(nativeAd: FBNativeAd) {
+        print("Ad tapped: \(nativeAd.title)")
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if adsCellProvider != nil && adsCellProvider.isAdCell(at: indexPath, forStride: UInt(adRowStep)) {
-            let ad = adsManager.nextNativeAd
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "adsCell", for: indexPath) as! AdsCell
-            ad?.registerView(forInteraction: cell, with: self)
-            cell.descript.text = ad?.body
-            cell.adTitle.text = ad?.title
-            
-            cell.actionButton.setTitle(ad?.callToAction, for: .normal)
-
-            if let pic = ad?.coverImage {
-                cell.adImg.kf.setImage(with: pic.url)
-            }
-           
-
-            return cell
+            return adsCellProvider.tableView(tableView, cellForRowAt: indexPath)
         }
         else {
 
@@ -208,7 +208,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let url = self.articles[indexPath.row - Int(indexPath.row / adRowStep)].urlToImage {
             cell.img.kf.setImage(with:url)
         }
-        else {
+        else if cell.img.image == nil {
             
             cell.imageWidth.constant = 0
             
@@ -269,7 +269,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                      self.view.addSubview(self.button)
                     
                 }
-               
+
                 
                 
             }

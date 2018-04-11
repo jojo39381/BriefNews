@@ -109,59 +109,6 @@
                                             <outlet property="titleWidth" destination="YWz-4o-zI8" id="Q56-YR-m35"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="adsCell" rowHeight="300" id="CUJ-dQ-Jwg" customClass="AdsCell" customModule="BriefNews" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="228" width="375" height="300"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CUJ-dQ-Jwg" id="xEp-Mh-byf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GJ5-tf-7tc">
-                                                    <rect key="frame" x="16" y="46" width="344" height="169"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you drink coffee, carry on." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qkn-AB-vS1">
-                                                    <rect key="frame" x="46" y="221" width="283" height="34"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="ZDY-eO-0Vg"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" red="0.42213719170000003" green="0.43136738990000001" blue="0.42533428499999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrT-27-XpM">
-                                                    <rect key="frame" x="158" y="263" width="60" height="26"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <state key="normal" title="Learn More"/>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="California ordered to add cancer warning to coffee, but the science doesn't hold up" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlI-GF-beB">
-                                                    <rect key="frame" x="36" y="11" width="304" height="27"/>
-                                                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="GJ5-tf-7tc" firstAttribute="top" secondItem="FlI-GF-beB" secondAttribute="bottom" constant="8" symbolic="YES" id="FXY-TD-1Df"/>
-                                                <constraint firstItem="Qkn-AB-vS1" firstAttribute="leading" secondItem="xEp-Mh-byf" secondAttribute="leadingMargin" constant="31" id="GJd-MM-8XZ"/>
-                                                <constraint firstItem="FlI-GF-beB" firstAttribute="leading" secondItem="xEp-Mh-byf" secondAttribute="leadingMargin" constant="21" id="OGW-TR-4C3"/>
-                                                <constraint firstItem="FlI-GF-beB" firstAttribute="top" secondItem="xEp-Mh-byf" secondAttribute="topMargin" id="Oko-os-UZk"/>
-                                                <constraint firstItem="GJ5-tf-7tc" firstAttribute="centerX" secondItem="Qkn-AB-vS1" secondAttribute="centerX" id="QbE-Uh-8av"/>
-                                                <constraint firstItem="GJ5-tf-7tc" firstAttribute="leading" secondItem="xEp-Mh-byf" secondAttribute="leadingMargin" constant="1" id="S1r-d3-ulL"/>
-                                                <constraint firstItem="nrT-27-XpM" firstAttribute="bottom" secondItem="xEp-Mh-byf" secondAttribute="bottomMargin" id="Sle-Bo-wFj"/>
-                                                <constraint firstItem="nrT-27-XpM" firstAttribute="top" secondItem="Qkn-AB-vS1" secondAttribute="bottom" constant="8" symbolic="YES" id="jRt-HO-qN9"/>
-                                                <constraint firstItem="Qkn-AB-vS1" firstAttribute="top" secondItem="GJ5-tf-7tc" secondAttribute="bottom" constant="6" id="mKK-cZ-VS2"/>
-                                                <constraint firstItem="Qkn-AB-vS1" firstAttribute="centerX" secondItem="nrT-27-XpM" secondAttribute="centerX" id="rVb-9l-U2a"/>
-                                                <constraint firstItem="FlI-GF-beB" firstAttribute="centerX" secondItem="GJ5-tf-7tc" secondAttribute="centerX" id="sLx-3R-72F"/>
-                                                <constraint firstItem="FlI-GF-beB" firstAttribute="centerX" secondItem="xEp-Mh-byf" secondAttribute="centerX" id="sgq-k8-RTy"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="actionButton" destination="nrT-27-XpM" id="Fa2-sE-YjM"/>
-                                            <outlet property="adImg" destination="GJ5-tf-7tc" id="tgc-ol-JnY"/>
-                                            <outlet property="adTitle" destination="FlI-GF-beB" id="dz4-Wf-k8F"/>
-                                            <outlet property="descript" destination="Qkn-AB-vS1" id="OWU-yU-WUf"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="zzR-MJ-vfr"/>
@@ -287,7 +234,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ek9-jV-j3z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2444" y="133.5832083958021"/>
+            <point key="canvasLocation" x="1719" y="-184"/>
         </scene>
         <!--Brief-->
         <scene sceneID="sH7-xS-Y32">
@@ -486,59 +433,6 @@
                                             <outlet property="titleWidth" destination="MwU-vF-NNq" id="gTe-WG-XqL"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="storiesAdsCell" rowHeight="300" id="thp-C1-wVX" customClass="StoriesAdsCell" customModule="BriefNews" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="228" width="375" height="300"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="thp-C1-wVX" id="54Z-cu-hfe">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IeG-n2-aq0">
-                                                    <rect key="frame" x="16" y="46" width="344" height="169"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you drink coffee, carry on." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6yw-1L-K5L">
-                                                    <rect key="frame" x="46" y="221" width="283" height="34"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="1FR-Pc-OgA"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" red="0.42213719170000003" green="0.43136738990000001" blue="0.42533428499999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mP3-N2-RH3">
-                                                    <rect key="frame" x="158" y="263" width="60" height="26"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <state key="normal" title="Learn More"/>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="California ordered to add cancer warning to coffee, but the science doesn't hold up" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0v-xx-xvp">
-                                                    <rect key="frame" x="36" y="11" width="304" height="27"/>
-                                                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="h0v-xx-xvp" firstAttribute="centerX" secondItem="IeG-n2-aq0" secondAttribute="centerX" id="2RH-gY-GM1"/>
-                                                <constraint firstItem="IeG-n2-aq0" firstAttribute="top" secondItem="h0v-xx-xvp" secondAttribute="bottom" constant="8" symbolic="YES" id="5qy-RY-6UE"/>
-                                                <constraint firstItem="h0v-xx-xvp" firstAttribute="centerX" secondItem="54Z-cu-hfe" secondAttribute="centerX" id="Arl-yz-qOZ"/>
-                                                <constraint firstItem="IeG-n2-aq0" firstAttribute="centerX" secondItem="6yw-1L-K5L" secondAttribute="centerX" id="FBE-bw-B7Y"/>
-                                                <constraint firstItem="h0v-xx-xvp" firstAttribute="leading" secondItem="54Z-cu-hfe" secondAttribute="leadingMargin" constant="21" id="Gud-ZE-Ftg"/>
-                                                <constraint firstItem="6yw-1L-K5L" firstAttribute="centerX" secondItem="mP3-N2-RH3" secondAttribute="centerX" id="Liz-zT-Ktk"/>
-                                                <constraint firstItem="mP3-N2-RH3" firstAttribute="bottom" secondItem="54Z-cu-hfe" secondAttribute="bottomMargin" id="UQ1-94-x9K"/>
-                                                <constraint firstItem="IeG-n2-aq0" firstAttribute="leading" secondItem="54Z-cu-hfe" secondAttribute="leadingMargin" constant="1" id="V3k-hJ-QsD"/>
-                                                <constraint firstItem="6yw-1L-K5L" firstAttribute="leading" secondItem="54Z-cu-hfe" secondAttribute="leadingMargin" constant="31" id="ihK-Jv-QEP"/>
-                                                <constraint firstItem="h0v-xx-xvp" firstAttribute="top" secondItem="54Z-cu-hfe" secondAttribute="topMargin" id="jSR-Xi-P2V"/>
-                                                <constraint firstItem="6yw-1L-K5L" firstAttribute="top" secondItem="IeG-n2-aq0" secondAttribute="bottom" constant="6" id="qy7-E3-sRo"/>
-                                                <constraint firstItem="mP3-N2-RH3" firstAttribute="top" secondItem="6yw-1L-K5L" secondAttribute="bottom" constant="8" symbolic="YES" id="vrd-Iv-HQI"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="actionButton" destination="mP3-N2-RH3" id="8gd-lg-PoJ"/>
-                                            <outlet property="adImg" destination="IeG-n2-aq0" id="GOz-B7-8gh"/>
-                                            <outlet property="adTitle" destination="h0v-xx-xvp" id="eAq-2a-viM"/>
-                                            <outlet property="descript" destination="6yw-1L-K5L" id="aJK-GO-nwD"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="MfJ-aS-Gva" id="pCt-aM-uHf"/>
@@ -567,7 +461,7 @@
         <!--Search-->
         <scene sceneID="0Pp-qB-cjQ">
             <objects>
-                <viewController id="LMQ-10-qbO" sceneMemberID="viewController">
+                <viewController id="LMQ-10-qbO" customClass="SearchViewController" customModule="BriefNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2lU-Qn-hAt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -596,6 +490,9 @@
                         <viewLayoutGuide key="safeArea" id="0rf-gp-mT6"/>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="tgR-Kk-cDC"/>
+                    <connections>
+                        <outlet property="searchBar" destination="IMW-sL-B5h" id="fsq-uQ-fmo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MoU-jL-q0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

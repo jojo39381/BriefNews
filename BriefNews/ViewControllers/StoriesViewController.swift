@@ -14,14 +14,16 @@ import ProgressHUD
 import Kingfisher
 import CoreData
 import FBAudienceNetwork
-let rowStep = 5
 
-var ads2Manager: FBNativeAdsManager!
-
-var ads2CellProvider: FBNativeAdTableViewCellProvider!
 
 
 class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FBNativeAdDelegate,FBNativeAdsManagerDelegate{
+    let rowStep = 5
+
+    var ads2Manager: FBNativeAdsManager!
+
+    var ads2CellProvider: FBNativeAdTableViewCellProvider!
+    
     func nativeAdsLoaded() {
         
         ads2CellProvider = FBNativeAdTableViewCellProvider(manager: ads2Manager, for: FBNativeAdViewType.genericHeight300)
@@ -34,8 +36,7 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLayoutSubviews() {
         let cell = tableView.dequeueReusableCell(withIdentifier: "storiesCell") as! StoriesCell
         cell.title.sizeToFit()
-        let adscell = self.tableView.dequeueReusableCell(withIdentifier: "storiesAdsCell") as! StoriesAdsCell
-        adscell.adTitle.sizeToFit()
+       
     }
     
     func nativeAdsFailedToLoadWithError(_ error: Error) {
@@ -52,7 +53,7 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
     var changed = false
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let articlesUrl = "https://newsapi.org/v2/everything"
-    var params = ["apiKey":"37549870075446d3aefbbe3117adbad7",  "pageSize":"50","sources":"nytimes.com"]
+    var params = ["apiKey":"37549870075446d3aefbbe3117adbad7",  "pageSize":"50","domains":"nytimes.com", "sortBy":"popularity"]
     let headers = ""
     /// The ad unit ID from the AdMob UI.
     
@@ -76,24 +77,25 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
         if sourcesArray.count > 0 {
             if sourcesArray[0].sourcesID == "" {
                 
-                params["sources"] = "nytimes.com"
+                params["domains"] = "nytimes.com"
                 
                 
             }
             else {
-                var sourcesName = ""
-                for sources in sourcesArray {
-                    sourcesName += "\(sources.sourcesID!),"
+                var domainsName = ""
+                for domains in sourcesArray {
+                    domainsName += "\(domains.sourcesDomain!),"
                 }
-                params["sources"] = sourcesName
-                params.removeValue(forKey: "country")
-                print(params)
+                params["domains"] = domainsName
+
+                print("parameters:\(params)")
             }
         }
         
         
         fetchArticles(url: articlesUrl, parameters: params)
-        
+        configureAdManagerAndLoadAds()
+
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -113,23 +115,22 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
             if sourcesArray.count > 0 {
                 if sourcesArray[0].sourcesID == "" {
 
-                    params["sources"] = "nytimes.com"
+                    params["domains"] = "nytimes.com"
 
 
                 }
                 else {
-                    var sourcesName = ""
-                    for sources in sourcesArray {
-                        sourcesName += "\(sources.sourcesID!),"
+                    var domainsName = ""
+                    for domains in sourcesArray {
+                        domainsName += "\(domains.sourcesDomain!),"
                     }
-                    params["sources"] = sourcesName
-                    params.removeValue(forKey: "country")
-                    print(params)
+                    params["domains"] = domainsName
+
+                    print("parameters:\(params)")
                 }
             }
-            
             fetchArticles(url: articlesUrl, parameters: params)
-            configureAdManagerAndLoadAds()
+
             
             
             changed = false
@@ -138,7 +139,10 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
+        if ads2CellProvider != nil && ads2CellProvider.isAdCell(at: indexPath, forStride: UInt(rowStep)) {
+
+        }
+        else {
         let summaryVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "summary") as! SummaryViewController
         self.navigationController!.pushViewController(summaryVC, animated: true)
         
@@ -154,7 +158,7 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
         summaryVC.titleText = self.articles[indexPath.row - Int(indexPath.row / rowStep)].title
         summaryVC.url = self.articles[indexPath.row - Int(indexPath.row / rowStep)].url
         
-        
+        }
         
         
         
@@ -174,19 +178,7 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if ads2CellProvider != nil && ads2CellProvider.isAdCell(at: indexPath, forStride: UInt(rowStep)) {
-            let ad = ads2Manager.nextNativeAd
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "storiesAdsCell", for: indexPath) as! StoriesAdsCell
-            cell.descript.text = ad?.body
-            cell.adTitle.text = ad?.title
-            
-            cell.actionButton.setTitle(ad?.callToAction, for: .normal)
-            
-            if let pic = ad?.coverImage {
-                cell.adImg.kf.setImage(with: pic.url)
-            }
-            
-            ad?.registerView(forInteraction: cell, with: self)
-            return cell
+            return ads2CellProvider.tableView(tableView, cellForRowAt: indexPath)
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "storiesCell") as! StoriesCell
@@ -204,7 +196,7 @@ class StoriesViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let url = self.articles[indexPath.row - Int(indexPath.row / rowStep)].urlToImage {
                 cell.img.kf.setImage(with:url)
             }
-            else {
+            else if cell.img.image == nil {
                 
                 cell.imageWidth.constant = 0
                 

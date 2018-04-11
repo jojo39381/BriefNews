@@ -25,5 +25,9 @@ class ArticleCell: UITableViewCell {
         super.layoutSubviews()
         title.sizeToFit()
     }
-   
+    override func prepareForReuse() {
+        title.text = nil
+        descn.text = nil
+        author.text = nil
+    }
 }
